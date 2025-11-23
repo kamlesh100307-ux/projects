@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang='en'>
+<head>
+  <meta charset='utf-8'/>
+  <meta name='viewport' content='width=device-width,initial-scale=1'/>
+  <title>UPI Scam Detector — Result</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>Prediction</h1>
+    <div class="card">
+      <p>Predicted label: <strong>{{ 'Suspicious' if pred==1 else 'Legit' }}</strong></p>
+      <p>Risk probability: <strong>{{ prob }}</strong></p>
+      <h3>Top contributing features</h3>
+      <ul>
+        {% for name, imp in top_imp %}
+          <li>{{ name }} — {{ '{:.3f}'.format(imp) }}</li>
+        {% endfor %}
+      </ul>
+      <h3>Input summary</h3>
+      <ul>
+        {% for k,v in form.items() %}
+          <li>{{ k }} : {{ v }}</li>
+        {% endfor %}
+      </ul>
+      <div class="screenshot">
+        <img src="{{ screenshot_path }}" alt="screenshot" style="max-width:420px;border-radius:8px;">
+      </div>
+      <div style="margin-top:12px"><a href="{{ url_for('index') }}" class="btn">Check another</a></div>
+    </div>
+    <div class="footnote">For deeper explainability use SHAP or LIME; in production protect user data & model access.</div>
+  </div>
+</body>
+</html>
